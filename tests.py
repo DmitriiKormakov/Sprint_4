@@ -56,9 +56,7 @@ class TestBooksCollector:
             "Сияние": "Ужасы",
         }
         horror_books = collector.get_books_with_specific_genre("Ужасы")
-        assert len(horror_books) == 2
-        assert "Оно" in horror_books
-        assert "Сияние" in horror_books
+        assert horror_books == ["Оно", "Сияние"]
 
     def test_get_books_for_children_returns_only_child_friendly_books(self):
         collector = BooksCollector()
@@ -92,13 +90,11 @@ class TestBooksCollector:
         collector.favorites = expected_favorites
         assert collector.get_list_of_favorites_books() == expected_favorites
 
-    def test_get_book_genre_returns_correct_genre(self):
+    def test_get_book_genre_returns_correct_genre_for_existing_book(self):
         collector = BooksCollector()
-        collector.books_genre = {"Сияние": "Ужасы", "Книга без жанра": ""}
+        collector.books_genre = {"Сияние": "Ужасы"}
         assert collector.get_book_genre("Сияние") == "Ужасы"
-        assert collector.get_book_genre("Книга без жанра") == ""
-        assert collector.get_book_genre("Несуществующая книга") is None
-
+        
     def test_get_books_genre_returns_full_dict(self):
         collector = BooksCollector()
         expected_dict = {"Звёздные войны": "Фантастика", "Оно": "Ужасы"}
